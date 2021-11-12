@@ -1,0 +1,9 @@
+[Unit]
+Description=MPD Client for Pimoroni GFX HAT
+
+[Service]
+ExecStart=/opt/gfx-mpc/gfxmpc.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
