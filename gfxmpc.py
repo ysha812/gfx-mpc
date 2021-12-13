@@ -447,13 +447,6 @@ class MPC:
         signal.signal(signal.SIGALRM, self._alarm_handler)
         signal.signal(signal.SIGTERM, self._termination_handler)
 
-        touch.on(0, self._up_touch_handler)
-        touch.on(1, self._down_touch_handler)
-        touch.on(2, self._back_touch_handler)
-        touch.on(3, self._minus_touch_handler)
-        touch.on(4, self._select_touch_handler)
-        touch.on(5, self._plus_touch_handler)
-
         font_dir = os.path.dirname(__file__)
         font_path = os.path.join(font_dir, 'unifont-14.0.01.pcf')
         font = ImageFont.truetype(font_path, FONT_SIZE)
@@ -542,6 +535,13 @@ class MPC:
                         if self._text_info[0].is_scrollable() or self._text_info[1].is_scrollable() or self._text_info[2].is_scrollable():
                             self._event_scroll.set()
 
+                        touch.on(0, self._up_touch_handler)
+                        touch.on(1, self._down_touch_handler)
+                        touch.on(2, self._back_touch_handler)
+                        touch.on(3, self._minus_touch_handler)
+                        touch.on(4, self._select_touch_handler)
+                        touch.on(5, self._plus_touch_handler)
+
                     t_elapsed = float(status['elapsed'])
                     progress = int(t_elapsed / self._progress_update_interval)
 
@@ -607,6 +607,8 @@ class MPC:
 
                     lcd.show()
 
+                    touch._cap1166.stop_watching()
+
                     self._event_cancel.clear()
 
         except RuntimeError:
@@ -642,6 +644,5 @@ class MPC:
 
 
 if __name__ == '__main__':
-    mpd_client = MPC()
-    mpd_client.start()
+    MPC().start()
 
